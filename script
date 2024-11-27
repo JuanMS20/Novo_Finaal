@@ -1,0 +1,58 @@
+import { ref, onMounted } from 'vue';
+import { BookIcon, PencilIcon, LaptopIcon, CalculatorIcon } from 'lucide-vue-next';
+
+const handleImageError = (event) => {
+  event.target.src = '/ruta/a/imagen/por/defecto.jpg';
+};
+
+const categories = ref([
+  { icon: BookIcon, title: 'Libros', description: 'Encuentra y vende libros para todos los cursos' },
+  { icon: PencilIcon, title: 'Apuntes', description: 'Comparte y ten acceso a apuntes de alta calidad' },
+  { icon: LaptopIcon, title: 'Electrónica', description: 'Compra y vende calculadoras, laptops, etc.' },
+  { icon: CalculatorIcon, title: 'Útiles', description: 'Abastécete de útiles escolares esenciales' }
+]);
+
+const featuredProducts = ref([]);
+const latestProducts = ref([]);
+
+const loadProducts = () => {
+  try {
+    // Cargamos los productos destacados
+    featuredProducts.value = [
+      { id: 1, name: "Libro de Cálculo Avanzado", description: "Texto completo para cursos de cálculo universitario", price: "$75.000", image: "https://th.bing.com/th/id/OIP.YJg6c6rZqAzJTCBwZThSggHaKc?rs=1&pid=ImgDetMain" },
+      { id: 2, name: "Pack de Apuntes de Biología", description: "Resúmenes detallados de biología celular y molecular", price: "$30.000", image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" },
+      { id: 3, name: "Laptop para Estudiantes", description: "Perfecta para tomar notas y hacer trabajos", price: "$500.000", image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" },
+      { id: 4, name: "Kit de Dibujo Técnico", description: "Incluye reglas, compás y transportador de precisión", price: "$45.000", image: "https://th.bing.com/th/id/R.905c5cbca48cd19813f316e0c2936465?rik=%2bgwdMVIdIDyLzg&pid=ImgRaw&r=0" },
+      { id: 5, name: "Microscopio Digital", description: "Ideal para prácticas de laboratorio en casa", price: "$200.000", image: "https://th.bing.com/th/id/OIP.1XbctlNd_Zpy5-KcZ-wbLgHaHa?rs=1&pid=ImgDetMain" },
+      { id: 6, name: "Calculadora Científica", description: "Con funciones avanzadas para ingeniería y ciencias", price: "$80.000", image: "https://http2.mlstatic.com/calculadora-cientifica-casio-negro-fx-570ms-D_NQ_NP_333511-MLV20558458065_012016-F.jpg" },
+      { id: 7, name: "Mochila Universitaria", description: "Espaciosa y resistente, perfecta para llevar libros y laptop", price: "$60.000", image: "https://th.bing.com/th/id/OIP.oEZK39hFZbnViselv129wgHaF2?rs=1&pid=ImgDetMain" },
+      { id: 8, name: "Tableta Gráfica", description: "Para estudiantes de diseño y arquitectura", price: "$150.000", image: "https://th.bing.com/th/id/OIP.C8oERVoc2NIde1XuAlDseQHaDy?rs=1&pid=ImgDetMain" }
+    ];
+
+    // Cargamos los últimos productos
+    latestProducts.value = [
+      { id: 9, name: "Libro de Física Cuántica", description: "Última edición con ejercicios resueltos", price: "$85.000", image: "https://images.unsplash.com/photo-1632571401005-458e9d244591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" },
+      { id: 10, name: "Apuntes de Derecho Constitucional", description: "Resúmenes actualizados y casos prácticos", price: "$40.000", image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" },
+      { id: 11, name: "Impresora Multifuncional", description: "Perfecta para imprimir trabajos y escanear documentos", price: "$180.000", image: "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" },
+      { id: 12, name: "Set de Marcadores para Apuntes", description: "50 colores para organizar tus notas", price: "$25.000", image: "https://http2.mlstatic.com/D_NQ_NP_2X_823448-MLM45392435550_032021-F.jpg" }
+    ];
+  } catch (error) {
+    console.error('Error al cargar los productos:', error);
+  }
+};
+
+onMounted(() => {
+  loadProducts();
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.product-card, .category-card').forEach(card => {
+    observer.observe(card);
+  });
+}); 

@@ -1,0 +1,2 @@
+[26-Nov-2024 21:12:40 UTC] [DEBUG] Intentando conexión a MySQL con DSN: mysql:host=localhost;port=3306
+[26-Nov-2024 21:12:40 UTC] [ERROR] Conexión fallida: could not find driver
